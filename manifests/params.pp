@@ -46,8 +46,8 @@ class sfptpd::params {
   $package_name                 = 'sfptpd'
   $package_ensure               = 'installed'
   $config_file                  = '/etc/sfptpd.conf'
-  $config_file_owner            = 0
-  $config_file_group            = 0
+  $config_file_owner            = '0'
+  $config_file_group            = '0'
   $config_file_mode             = '0755'
   $config_file_content_template = 'sfptpd/sfptpd.conf.erb'
   $service_name                 = 'sfptpd'
