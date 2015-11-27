@@ -52,6 +52,7 @@ class sfptpd(
   $config_file_content_template = $sfptpd::params::config_file_content_template,
   $service_name                 = $sfptpd::params::service_name,
   $service_ensure               = $sfptpd::params::service_ensure,
+  $service_ensure_force_undef   = $sfptpd::params::service_ensure_force_undef,
   $service_enable               = $sfptpd::params::service_enable,
   $service_hasrestart           = $sfptpd::params::service_hasrestart,
   $service_hasstatus            = $sfptpd::params::service_hasstatus,
@@ -134,6 +135,7 @@ class sfptpd(
   if ! ($service_ensure in [ 'running', 'stopped' ]) {
     fail("Parameter 'service_ensure' must be 'running' or 'stopped'")
   }
+  validate_bool($service_ensure_force_undef)
   validate_bool($service_enable)
   validate_bool($service_hasrestart)
   validate_bool($service_hasstatus)

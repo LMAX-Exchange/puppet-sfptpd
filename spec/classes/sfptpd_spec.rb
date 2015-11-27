@@ -45,6 +45,13 @@ describe 'sfptpd' do
       it { should contain_service('sfptpd2').with_hasstatus(false) }
     end
 
+    describe 'sfptpd::service with service_ensure_force_undef=true' do
+      let(:params) {{
+        :service_ensure_force_undef => true
+      }}
+      it { should contain_service('sfptpd').with_ensure(nil) }
+    end
+
     describe 'sfptpd::config' do
       it { should contain_file('/etc/sfptpd.conf').with_owner('0') }
       it { should contain_file('/etc/sfptpd.conf').with_group('0') }

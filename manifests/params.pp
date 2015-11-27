@@ -52,6 +52,7 @@ class sfptpd::params {
   $config_file_content_template = 'sfptpd/sfptpd.conf.erb'
   $service_name                 = 'sfptpd'
   $service_ensure               = 'running'
+  $service_ensure_force_undef   = false
   $service_enable               = true
   $service_hasrestart           = true
   $service_hasstatus            = true
