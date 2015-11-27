@@ -65,7 +65,7 @@ class { 'sfptpd':
 }
 ~~~
 
-###
+### Daemon or Foreground
 
 On Red Hat / CentOS and with sfptpd version 2.2.4.70-1 there is a minor bug in the init script
 where it does not return the correct number for the 'status' action, so Puppet would never
@@ -75,6 +75,19 @@ like so:
 ~~~ puppet
 class { 'sfptpd':
   manage_init_script => false,
+}
+~~~
+
+You may have a use case to run sfptpd in the foreground, say with supervisord. Due to the way
+class parameters work in Puppet 3, you can't set $service_ensure=undef, as the Puppet Parser will
+still take the default parameter value. There is a separate boolean to force the module to not
+manage the ensure parameter of the sfptpd service:
+
+~~~ puppet
+class { 'sfptpd':
+  daemon                     => false,
+  service_ensure_force_undef => true,
+  service_enable             => false,
 }
 ~~~
 
