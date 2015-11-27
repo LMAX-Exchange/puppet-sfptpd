@@ -1,0 +1,244 @@
+# Puppet Managed configuration for sfptpd
+#
+# The base of this configuration file is from a sample file in RPM sfptpd-2.2.4.70-1.x86_64.
+
+# Specify the PTP Synchronization Module. Can also be specified on the command
+# line using the -m option.
+sync_mode <%= @sync_mode %>
+
+# Specify the interface to use. Can also be specified on the command line using
+# the -i option.
+interface <%= @interface %>
+
+# Specify whether messages are sent to the syslog, stderr or to a file. By default
+# messages are sent to stderr.
+message_log <%= @message_log %>
+
+# Specify whether stats logging is enabled and whether stats are sent to stdout
+# or to a file
+<% if @stats_log_enable -%>
+stats_log <%= @stats_log_file %>
+<% else -%>
+stats_log off
+<% end -%>
+
+# Configure sfptpd to run as a daemon
+<% if @daemon -%>
+daemon
+<% else -%>
+# daemon 
+<% end -%>
+
+# whether to use a lock file to stop multiple simultaneous instances of the
+# daemon. Enabled by default.
+lock <%= @lock %>
+
+# Specify how the clocks are controlled. By default clocks are stepped and
+# slewed as necessary. Possible values are:
+#    slew-and-step     Allow clock stepping as required
+#    step-at-startup   Only allow the clock to be stepped at startup
+#    no-step           Never step the clock
+#    no-adjust         Do not make any adjustment to the clocks
+#    step-forward      Only step the clock forward
+clock_control <%= @clock_control %>
+
+# Specifies whether to use saved clock frequency corrections when disciplining
+# clocks. Enabled by default.
+persistent_clock_correction <%= @persistent_clock_correction %>
+
+# Specifies set of interfaces on which general receive packet timestamping should
+# be enabled. Specify by interface name or MAC address or use * to enable receive
+# timestamping on all interfaces that support it.
+<% if @timestamping_interfaces -%>
+timestamping_interfaces <%= @timestamping_interfaces %>
+<% else -%>
+# timestamping_interfaces 00:0f:53:01:7b:fc eth33 *
+<% end -%>
+
+# Specifies whether to disable timestamping on exit. This affects all interfaces
+# specified with timestamping_interfaces as well as the interface selected for PTP.
+# The default setting is on.
+timestamping_disable_on_exit <%= @timestamping_disable_on_exit %>
+
+# Specifies the trace level if the application has been built with trace enabled.
+# Default is 0, no trace.
+trace_level <%= @trace_level %>
+
+<% if @sync_mode == 'freerun' -%>
+#
+# Freerun Configuration
+#
+
+# Specify Freerun mode. Possible values are:
+#    * nic - A NIC clock is chosen as the local clock reference based on the 
+#            interface if specified, otherwise the first NIC clock found
+#    * ntp - The system clock is chosen as the local clock reference and all
+#            NIC clocks are sync'ed to it. NTP is allowed to run at the same
+#            time.
+freerun_mode <%= @freerun_mode %>
+
+#
+# NTP Configuration
+#
+
+# Specified how to interact with the NTP daemon. By default NTP interaction is
+# disabled. Possible values are:
+#    off         Interaction with NTP daemon not required
+#    read-only   sfptpd will query the NTP daemon but not attempt to modify its
+#                state
+#    control     sfptpd will query and control the NTP daemon as necessary
+ntp_mode <%= @ntp_mode %>
+
+# Specifies how often the NTP daemon will be polled in seconds. The default is 1.
+ntp_poll_interval <%= @ntp_poll_interval %>
+
+# Specifies the ID and the value of shared key ID and value to use to
+# authenticate control requests with the NTP daemon. The key ID is an integer and
+# the key value is a plaintext ascii string up to 31 characters long i.e. an "m"
+# key as defined by NTPd. The key ID must be identified in the NTP configuration
+# file in the trustedkey and requestkey lists and the key itself must appear in
+# the /etc/ntp/keys file.
+<%   if @ntp_key -%>
+ntp_key <%= @ntp_key %>
+<%   else -%>
+# ntp_key 8 "my shared NTP daemon key"
+<%   end -%>
+<% elsif @sync_mode == 'ptp' -%>
+#
+# PTP Configuration
+#
+
+# Specify PTP Slave mode
+ptp_mode <%= @ptp_mode %>
+
+# Specify PTP stats logging level. Generally not needed, recommend stats_log
+# in preference.
+ptp_stats <%= @ptp_stats %>
+
+# Enable dump of each received PTP packet in detail - produces lots of output!
+<% if @ptp_pkt_dump -%>
+ptp_pkt_dump
+<% else -%>
+# ptp_pkt_dump
+<% end -%>
+
+# Enable logging of PPS measurements and set the PPS propagtion delay
+<% if @ptp_pps_log -%>
+ptp_pps_log
+pps_delay <%= @pps_delay %>
+<% else -%>
+# ptp_pps_log
+# pps_delay 0
+<% end -%>
+
+# Specify threshold in nanoseconds for master-to-slave and slave-to-master
+# delay measurements above which measurements are discarded.
+ptp_delay_discard_threshold <%= @ptp_delay_discard_threshold %>
+
+# TX and RX transmission latencies in nanoseconds - use to correct for network
+# asymmetry.
+ptp_tx_latency <%= @ptp_tx_latency %>
+ptp_rx_latency <%= @ptp_rx_latency %>
+
+# Specify the PTP network mode - conventional multicast or hybrid
+ptp_network_mode <%= @ptp_network_mode %>
+
+# TTL value. Default is 64.
+ptp_ttl <%= @ptp_ttl %>
+ 
+# Configures how PTP handles the UTC offset valid flag. The specification is
+# ambigious in its description of the meaning of the UTC offset valid flag
+# and this has resulted in varying different implementations. In most
+# implementations, if the UTC offset valid flag is not set then the UTC offset
+# is not used but in others, the UTC offset valid is an indcation that the
+# master is completely confident that the UTC offset is correct. Various
+# options are supported:
+#    default  If UTCV is set use the UTC offset, otherwise do not use it
+#    ignore   Do not used the UTCV flag - always apply the indicated UTC offset
+#    prefer   Prefer GMs that have UTCV flag set above those that don't
+#    require  Do not accept GMs that do not set UTCV
+ptp_utc_valid_handling <%= @ptp_utc_valid_handling %>
+
+# Use to modify the PTP domain in the range 0..255. Default is 0.
+ptp_domain <%= @ptp_domain %>
+ 
+# Configure PTP management message support. Disabled by default. Possible
+# values are:
+#    disabled   Management messages disabled
+#    read-only  Only requests to read information (GET) will be accepted
+ptp_mgmt_msgs <%= @ptp_mgmt_msgs %>
+
+# Access Control Lists
+# This feature restricts the set of network addresses from which PTP will listen
+# to timing and management messages. The control uses a permit and deny list
+# and the option to specify the order in which the lists are evaluated. There are
+# separate controls for timing and management messages.
+# Each list should be a series of network address in the format a.b.c.d/x where
+# a.b.c.d specifies the subnet and x the mask - to specify a single IP address
+# a mask of 32 should be specified.
+# When enabled, each time that a PTP message is received, the source IP address
+# of the incoming message is matched against the permit and deny lists and the
+# message is allowed or discarded accordingly.
+# The network addresses in each list should be separated with spaces or commas e.g.
+#       192.168.1.0/24 192.168.4.0/24 172.10.11.1/32 or
+#       192.168.1.0/24,192.168.4.0/24,172.10.11.1/32
+<% if @ptp_timing_acl_permit -%>
+ptp_timing_acl_permit <%= @ptp_timing_acl_permit %>
+<% else -%>
+# ptp_timing_acl_permit 172.16.128.48/32 172.16.128.47/32
+<% end -%>
+<% if @ptp_timing_acl_deny -%>
+ptp_timing_acl_deny <%= @ptp_timing_acl_deny %>
+<% else -%>
+# ptp_timing_acl_deny 172.16.128.0/21
+<% end -%>
+<% if @ptp_timing_acl_order -%>
+ptp_timing_acl_order <%= @ptp_timing_acl_order %>
+<% else -%>
+# ptp_timing_acl_order permit-deny
+<% end -%>
+<% if @ptp_mgmt_acl_permit -%>
+ptp_mgmt_acl_permit <%= @ptp_mgmt_acl_permit %>
+<% else -%>
+# ptp_mgmt_acl_permit 10.10.1.1/32 10.12.1.0/24
+<% end -%>
+<% if @ptp_mgmt_acl_deny -%>
+ptp_mgmt_acl_deny <%= @ptp_mgmt_acl_deny %>
+<% else -%>
+# ptp_mgmt_acl_deny 172.0.0.0/8
+<% end -%>
+<% if @ptp_mgmt_acl_order -%>
+ptp_mgmt_acl_order <%= @ptp_mgmt_acl_order %>
+<% else -%>
+# ptp_mgmt_acl_order deny-permit
+<% end -%>
+
+# The Announce receipt timeout in multiples of the announce interval.
+ptp_announce_timeout <%= @ptp_announce_timeout %>
+
+# The Sync Packet receipt timeout in multiples of the sync packet interval.
+ptp_sync_pkt_timeout <%= @ptp_sync_pkt_timeout %>
+
+# The Delay Request in interval in 2^number seconds. If specified for a
+# PTP slave, this overrides the value communicated to the slave from the
+# master.
+ptp_delayreq_interval <%= @ptp_delayreq_interval %>
+
+# The Delay Response receipt timeout 2^number seconds. Default is -2 (250ms).
+ptp_delayresp_timeout <%= @ptp_delayresp_timeout %>
+
+# The maximum number of foreign master records a node is enable to store
+# simultaneously.
+ptp_max_foreign_records <%= @ptp_max_foreign_records %>
+
+# Specifies whether to use hardware filtering of received PTP packets against
+# the parent UUID. Default is on.
+ptp_uuid_filtering <%= @ptp_uuid_filtering %>
+
+# Specifies whether to use hardware filtering of received PTP packets against
+# the selected PTP domain number. Default is on.
+ptp_domain_filtering <%= @ptp_domain_filtering %>
+
+# Set PTPD debug message level. Defaults to 0 (off).
+ptp_trace <%= @ptp_trace %>
+<% end -%>

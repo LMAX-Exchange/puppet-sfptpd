@@ -1,0 +1,115 @@
+# sfptpd
+
+#### Table of Contents
+
+2. [Module Description - What is the sfptpd module, and what does it do?](#module-description)
+3. [Setup - The basics of getting started with sfptpd](#setup)
+    * [What sfptpd affects](#what-sfptpd-affects)
+    * [Setup requirements](#setup-requirements)
+    * [Beginning with sfptpd](#beginning-with-sfptpd)
+4. [Usage - Configuration options and additional functionality](#usage)
+5. [Limitations - OS compatibility, etc.](#limitations)
+6. [Development - Guide for contributing to the module](#development)
+    * [Running Tests](#Running Tests)
+
+## Module Description
+
+This module manages SolarFlare's Enhanced Precision Time Synchronisation (PTP) Daemon, sfptpd,
+which is a derivitive of the open source PTP daemon (http://ptpd.sourceforge.net), and is
+designed to run in conjunction with SolarFlare's PTP adapters.
+
+## Setup
+
+### What the sfptpd Puppet module affects
+
+* Installs the sfptpd package
+* Supports the different ways sfptpd can be configured; ptp mode and freerun mode
+* Manages the sfptpd service
+
+### Setup Requirements
+
+The sfptpd package can be found on SolarFlare's webiste: https://support.solarflare.com/
+
+### Beginning with sfptpd
+
+sfptpd runs in one of many modes. It can be a PTP Master time source, a PTP Slave, or in a
+freerun mode where it synchronises SolarFlare adapter clocks to the server system clock or NTP.
+
+sfptpd needs to be customised to your environment and use case. A good starting point is
+SolarFlare's Enhanced PTP Quick Start Guide:
+
+http://solarflare.com/Content/UserFiles/Documents/Solarflare_Enhanced_PTP_Quick_Start_Guide.pdf
+
+After that, the comprehensive Enhanced PTP User Guide. Once you have a thorough understanding
+of what you want to achieve, the sfptpd Puppet module can be used to configure your use cases.
+
+## Usage
+
+An example of sfptpd in PTP Slave mode:
+
+~~~ puppet
+class { 'sfptpd': 
+  sync_mode => 'ptp',
+  interface => 'eth1',
+  ptp_mode  => 'slave',
+}
+~~~
+
+An example of sfptpd in freerun NTP mode:
+
+~~~ puppet
+class { 'sfptpd': 
+  sync_mode    => 'freerun',
+  freerun_mode => 'ntp',
+  ntp_mode     => 'read-only',
+}
+~~~
+
+###
+
+On Red Hat / CentOS and with sfptpd version 2.2.4.70-1 there is a minor bug in the init script
+where it does not return the correct number for the 'status' action, so Puppet would never
+restart the service. To fix this the sfptpd module manages the Red Hat init script. This can be disabled
+like so:
+
+~~~ puppet
+class { 'sfptpd':
+  manage_init_script => false,
+}
+~~~
+
+### Logging and Log Rotation
+
+The sfptpd module logs to a file by default, and it uses a 'logrotate::rule' defined type
+(from https://github.com/b4ldr/puppet-logrotate). To disable the use of this type, or 
+change to logging via Syslog, you can do this:
+
+~~~ puppet
+class { 'sfptpd':
+  manage_logrotate => false,
+  message_log      => 'syslog',
+}
+~~~
+
+You can also turn on PTP statistics logging which will write to /var/log/sfptpd/stats.log, or,
+specify your own stats log file like so:
+
+~~~ puppet
+class { 'sfptpd':
+  stats_log_enable => true,
+  stats_log_file   => '/tmp/sfptpd_stats.log',
+}
+~~~
+
+## Limitations
+
+At the moment, the module is only tested against CentOS 6, however the code is simple
+enough that it's not expected to have any problems with other distributions.
+
+## Development
+
+We will accept pull requests on Git Hub.
+
+### Running Tests
+
+Tests utilise both [rspec-puppet][] and [beaker-rspec][].

@@ -1,0 +1,23 @@
+# Documentation http://doc.gitlab.com/ci/yaml/README.html
+
+"ruby 1.8.7-p352":
+  script:
+    - 'export RBENV_VERSION=1.8.7-p352'
+    - 'ruby -v'
+    - 'bundle install --path vendor/bundle --without system_tests'
+    - 'bundle exec rake lint validate spec SPEC_OPTS="--format documentation"'
+
+"ruby1.9.3-p551 ":
+  script:
+    - 'export RBENV_VERSION=1.9.3-p551'
+    - 'ruby -v'
+    - 'bundle install --path vendor/bundle --without system_tests'
+    - 'bundle exec rake lint validate spec SPEC_OPTS="--format documentation"'
+
+"ruby 2.1.6":
+  script:
+    - 'export RBENV_VERSION=2.1.6'
+    - 'ruby -v'
+    - 'bundle install --path vendor/bundle --without system_tests'
+    - 'bundle exec rake lint validate spec SPEC_OPTS="--format documentation"'
+

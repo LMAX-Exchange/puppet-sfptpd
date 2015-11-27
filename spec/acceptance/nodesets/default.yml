@@ -1,0 +1,12 @@
+HOSTS:
+  default.wyry:
+    roles:
+      - master
+    platform: el-6-x86_64
+    box : CentOS-6-x86_64-Minimal
+    box_url : http://store01.timhughes.org/~tim/CentOS-6-x86_64-Minimal.box
+    hypervisor : vagrant
+CONFIG:
+  nfs_server: none
+  type: foss
+  trace_limit: 1000
