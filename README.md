@@ -78,10 +78,11 @@ class { 'sfptpd':
 }
 ~~~
 
-You may have a use case to run sfptpd in the foreground, say with supervisord. Due to the way
-class parameters work in Puppet 3, you can't set $service_ensure=undef, as the Puppet Parser will
-still take the default parameter value. There is a separate boolean to force the module to not
-manage the ensure parameter of the sfptpd service:
+You may have a use case to run sfptpd in the foreground, say with supervisord. You cannot set
+$service_ensure=stopped because the init script will attempt to shut down any running sfptpd process.
+Due to the way class parameters work in Puppet 3, neither can you set $service_ensure=undef,
+as the Puppet Parser will still take the default parameter value. There is a separate boolean to
+force the module to not manage the ensure parameter of the sfptpd service:
 
 ~~~ puppet
 class { 'sfptpd':
