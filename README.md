@@ -2,14 +2,14 @@
 
 #### Table of Contents
 
-2. [Module Description - What is the sfptpd module, and what does it do?](#module-description)
-3. [Setup - The basics of getting started with sfptpd](#setup)
+2. [Module Description](#module-description)
+3. [Setup](#setup)
     * [What sfptpd affects](#what-sfptpd-affects)
     * [Setup requirements](#setup-requirements)
     * [Beginning with sfptpd](#beginning-with-sfptpd)
-4. [Usage - Configuration options and additional functionality](#usage)
-5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
+4. [Usage](#usage)
+5. [Limitations](#limitations)
+6. [Development](#development)
     * [Running Tests](#Running Tests)
 
 ## Module Description
@@ -118,7 +118,8 @@ class { 'sfptpd':
 ## Limitations
 
 At the moment, the module is only tested against CentOS 6, however the code is simple
-enough that it's not expected to have any problems with other distributions.
+enough that it's not expected to have any problems with other distributions. There are certain
+things you won't want to turn off non-Red Hat systems though, like managing the init script.
 
 ## Development
 
