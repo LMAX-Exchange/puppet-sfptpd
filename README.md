@@ -112,4 +112,4 @@ We will accept pull requests on Git Hub.
 
 ### Running Tests
 
-Tests utilise both [rspec-puppet][] and [beaker-rspec][].
+Tests utilise both rspec-puppet and beaker-rspec.
