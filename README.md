@@ -2,14 +2,14 @@
 
 #### Table of Contents
 
-2. [Module Description](#module-description)
-3. [Setup](#setup)
+1. [Module Description](#module-description)
+2. [Setup](#setup)
     * [What sfptpd affects](#what-sfptpd-affects)
     * [Setup requirements](#setup-requirements)
     * [Beginning with sfptpd](#beginning-with-sfptpd)
-4. [Usage](#usage)
-5. [Limitations](#limitations)
-6. [Development](#development)
+3. [Usage](#usage)
+4. [Limitations](#limitations)
+5. [Development](#development)
     * [Running Tests](#Running Tests)
 
 ## Module Description
