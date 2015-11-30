@@ -46,6 +46,7 @@ class sfptpd::config(
   $config_file_group            = $sfptpd::config_file_group,
   $config_file_mode             = $sfptpd::config_file_mode,
   $config_file_content_template = $sfptpd::config_file_content_template,
+  $manage_service               = $sfptpd::manage_service,
 ) inherits sfptpd {
   assert_private()
   file { $config_file:
@@ -54,7 +55,10 @@ class sfptpd::config(
     group   => $config_file_group,
     mode    => $config_file_mode,
     content => template($config_file_content_template),
-    notify  => Class[sfptpd::service],
+    notify  => $manage_service ? {
+      false   => undef,
+      default => Class[sfptpd::service],
+    },
   }
 
   if ($manage_init_script) {

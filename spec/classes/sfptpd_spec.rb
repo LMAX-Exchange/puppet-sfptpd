@@ -66,6 +66,13 @@ describe 'sfptpd' do
 
       it { should contain_logrotate__rule('sfptpd') }
 
+      describe 'with manage_service=false' do
+        let(:params) {{
+          :manage_service => false
+        }}
+        it { should contain_file('/etc/sfptpd.conf').that_notifies(nil) }
+      end
+
       describe 'with parameter sync_mode' do
         context 'set to freerun' do
           let(:params) {{ :sync_mode => 'freerun' }}
