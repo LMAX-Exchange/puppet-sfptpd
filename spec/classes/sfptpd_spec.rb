@@ -45,11 +45,11 @@ describe 'sfptpd' do
       it { should contain_service('sfptpd2').with_hasstatus(false) }
     end
 
-    describe 'sfptpd::service with service_ensure_force_undef=true' do
+    describe 'sfptpd::service with manage_service=false' do
       let(:params) {{
-        :service_ensure_force_undef => true
+        :manage_service => false
       }}
-      it { should contain_service('sfptpd').with_ensure(nil) }
+      it { should_not contain_service('sfptpd') }
     end
 
     describe 'sfptpd::config' do
