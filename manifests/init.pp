@@ -45,7 +45,6 @@ class sfptpd(
   $ntp_key                      = $sfptpd::params::ntp_key,
   $package_name                 = $sfptpd::params::package_name,
   $package_ensure               = $sfptpd::params::package_ensure,
-  $service_name                 = $sfptpd::params::service_name,
   $config_file                  = $sfptpd::params::config_file,
   $config_file_owner            = $sfptpd::params::config_file_owner,
   $config_file_group            = $sfptpd::params::config_file_group,
