@@ -31,6 +31,7 @@ class sfptpd::config(
   $ptp_mgmt_acl_order           = $sfptpd::ptp_mgmt_acl_order,
   $ptp_announce_timeout         = $sfptpd::ptp_announce_timeout,
   $ptp_sync_pkt_timeout         = $sfptpd::ptp_sync_pkt_timeout,
+  $ptp_sync_pkt_interval        = $sfptpd::ptp_sync_pkt_interval,
   $ptp_delayreq_interval        = $sfptpd::ptp_delayreq_interval,
   $ptp_delayresp_timeout        = $sfptpd::ptp_delayresp_timeout,
   $ptp_max_foreign_records      = $sfptpd::ptp_max_foreign_records,

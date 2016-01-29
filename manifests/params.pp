@@ -33,6 +33,7 @@ class sfptpd::params {
   $ptp_mgmt_acl_order           = undef
   $ptp_announce_timeout         = 6
   $ptp_sync_pkt_timeout         = 6
+  $ptp_sync_pkt_interval        = 0
   $ptp_delayreq_interval        = 0
   $ptp_delayresp_timeout        = -2
   $ptp_max_foreign_records      = 16

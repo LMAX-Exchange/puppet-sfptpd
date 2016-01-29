@@ -219,6 +219,9 @@ ptp_announce_timeout <%= @ptp_announce_timeout %>
 # The Sync Packet receipt timeout in multiples of the sync packet interval.
 ptp_sync_pkt_timeout <%= @ptp_sync_pkt_timeout %>
 
+#The Sync interval in 2^number seconds. Default 0.
+ptp_sync_pkt_interval <%= @ptp_sync_pkt_interval %>
+
 # The Delay Request in interval in 2^number seconds. If specified for a
 # PTP slave, this overrides the value communicated to the slave from the
 # master.

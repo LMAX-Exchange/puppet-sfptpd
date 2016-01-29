@@ -107,6 +107,11 @@ describe 'sfptpd' do
           let(:params) {{ :stats_log_enable => true, :stats_log_file => '/tmp/foo' }}
           it { should contain_file('/etc/sfptpd.conf').with_content(/^stats_log \/tmp\/foo/) }
       end
+
+      describe 'with adjusted ptp_sync_pkt_interval' do
+        let(:params) {{ :ptp_sync_pkt_interval => -2 }}
+        it { should contain_file('/etc/sfptpd.conf').with_content(/^ptp_sync_pkt_interval -2$/) }
+      end
     end
   end
 end
