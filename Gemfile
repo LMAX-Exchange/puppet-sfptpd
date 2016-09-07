@@ -17,6 +17,7 @@ group :development, :unit_tests do
   gem 'puppet_facts',            :require => false
   gem 'json',                    :require => false
   gem 'metadata-json-lint',      :require => false
+  gem 'json_pure', '<= 1.8.3',   :require => false if RUBY_VERSION.to_f <= 1.9
   gem 'i18n', '0.6.0',           :require => false if RUBY_VERSION.to_f < 1.9
   gem 'nokogiri', '1.5.11',      :require => false if RUBY_VERSION.to_f < 1.9
   gem 'mime-types', '1.25.1',    :require => false if RUBY_VERSION.to_f < 1.9
