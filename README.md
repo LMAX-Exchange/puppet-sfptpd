@@ -1,5 +1,7 @@
 # sfptpd
 
+[![Build Status](https://travis-ci.org/LMAX-Exchange/puppet-sfptpd.svg?branch=master)](https://travis-ci.org/LMAX-Exchange/puppet-sfptpd)
+
 #### Table of Contents
 
 1. [Module Description](#module-description)
