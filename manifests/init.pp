@@ -153,7 +153,7 @@ class sfptpd(
     Class[::sfptpd::service] -> Class[::sfptpd::config]
   }
   if ($package_ensure == 'absent') {
-    Class[::sfptpd::service] -> Class[::sfptpd::install]
+    Class[::sfptpd::config] -> Class[::sfptpd::install]
   } else {
     Class[::sfptpd::install] -> Class[::sfptpd::config]
   }
