@@ -43,6 +43,7 @@ class sfptpd::config(
   $ntp_poll_interval            = $sfptpd::ntp_poll_interval,
   $ntp_key                      = $sfptpd::ntp_key,
   $config_file                  = $sfptpd::config_file,
+  $config_file_ensure           = $sfptpd::config_file_ensure,
   $config_file_owner            = $sfptpd::config_file_owner,
   $config_file_group            = $sfptpd::config_file_group,
   $config_file_mode             = $sfptpd::config_file_mode,
@@ -50,6 +51,13 @@ class sfptpd::config(
   $manage_service               = $sfptpd::manage_service,
 ) inherits sfptpd {
   assert_private()
+
+  if ($config_file_ensure == 'absent') {
+    $config_file_notifies = undef
+  } else {
+    $config_file_notifies = Class[sfptpd::service]
+  }
+
   file { $config_file:
     ensure  => $config_file_ensure,
     owner   => $config_file_owner,
@@ -58,7 +66,7 @@ class sfptpd::config(
     content => template($config_file_content_template),
     notify  => $manage_service ? {
       false   => undef,
-      default => Class[sfptpd::service],
+      default => $config_file_notifies,
     },
   }
 

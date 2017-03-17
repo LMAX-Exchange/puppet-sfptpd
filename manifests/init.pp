@@ -46,6 +46,7 @@ class sfptpd(
   $package_name                 = $sfptpd::params::package_name,
   $package_ensure               = $sfptpd::params::package_ensure,
   $config_file                  = $sfptpd::params::config_file,
+  $config_file_ensure           = $sfptpd::params::config_file_ensure,
   $config_file_owner            = $sfptpd::params::config_file_owner,
   $config_file_group            = $sfptpd::params::config_file_group,
   $config_file_mode             = $sfptpd::params::config_file_mode,
@@ -146,7 +147,14 @@ class sfptpd(
   contain ::sfptpd::config
   contain ::sfptpd::service
 
-  Class[::sfptpd::install] ->
-    Class[::sfptpd::config] ->
-    Class[::sfptpd::service]
+  if ($service_ensure == 'running') {
+    Class[::sfptpd::config] -> Class[::sfptpd::service]
+  } else {
+    Class[::sfptpd::service] -> Class[::sfptpd::config]
+  }
+  if ($package_ensure == 'absent') {
+    Class[::sfptpd::service] -> Class[::sfptpd::install]
+  } else {
+    Class[::sfptpd::install] -> Class[::sfptpd::config]
+  }
 }
