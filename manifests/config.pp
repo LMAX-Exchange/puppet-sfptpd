@@ -77,7 +77,10 @@ class sfptpd::config(
       group   => 0,
       mode    => '0755',
       content => template("${module_name}/sfptpd.init.erb"),
-      notify  => Class[sfptpd::service],
+      notify  => $manage_service ? {
+        false   => undef,
+        default => $config_file_notifies,
+      },
     }
   }
 
