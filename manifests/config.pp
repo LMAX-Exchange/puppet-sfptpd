@@ -72,7 +72,7 @@ class sfptpd::config(
 
   if ($manage_init_script) {
     file { $sfptpd_init_script:
-      ensure  => present,
+      ensure  => $config_file_ensure,
       owner   => 0,
       group   => 0,
       mode    => '0755',
@@ -95,7 +95,10 @@ class sfptpd::config(
     }
   }
 
+  if ($config_file_ensure != 'absent') {
+    $log_dir_ensure = 'directory'
+  }
   file { '/var/log/sfptpd':
-    ensure => directory,
+    ensure => $log_dir_ensure,
   }
 }
