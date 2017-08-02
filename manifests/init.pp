@@ -66,7 +66,7 @@ class sfptpd(
   }
   validate_string($interface)
   validate_string($message_log)
-  validate_string($stats_log)
+  validate_string($stats_log_file)
   validate_bool($daemon)
   validate_string($lock)
   if ! ($lock in [ 'on', 'off' ]) {

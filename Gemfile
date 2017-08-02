@@ -11,17 +11,20 @@ def location_for(place, fake_version = nil)
 end
 
 group :development, :unit_tests do
-  gem 'rspec-core', '3.1.7',     :require => false
-  gem 'puppetlabs_spec_helper',  :require => false
-  gem 'simplecov',               :require => false
-  gem 'puppet_facts',            :require => false
-  gem 'json',                    :require => false
-  gem 'metadata-json-lint',      :require => false
-  gem 'json_pure', '<= 1.8.3',   :require => false if RUBY_VERSION.to_f <= 1.9
-  gem 'i18n', '0.6.0',           :require => false if RUBY_VERSION.to_f < 1.9
-  gem 'nokogiri', '1.5.11',      :require => false if RUBY_VERSION.to_f < 1.9
-  gem 'mime-types', '1.25.1',    :require => false if RUBY_VERSION.to_f < 1.9
-  gem 'hocon', '0.1.0',          :require => false if RUBY_VERSION.to_f < 1.9
+  gem 'rake', '< 11',                       :require => false
+  gem 'rspec-puppet', '~> 2.5',             :require => false
+  gem 'puppetlabs_spec_helper',             :require => false
+  gem 'puppet_facts',                       :require => false
+  gem 'rspec-puppet-facts',                 :require => false
+  gem 'rspec-puppet-utils',                 :require => false
+  gem 'simplecov',                          :require => false
+  gem 'json',                               :require => false
+  gem 'metadata-json-lint',                 :require => false
+  gem 'json_pure', '<= 1.8.3',              :require => false if RUBY_VERSION.to_f <= 1.9
+  gem 'i18n', '0.6.0',                      :require => false if RUBY_VERSION.to_f < 1.9
+  gem 'nokogiri', '1.5.11',                 :require => false if RUBY_VERSION.to_f < 1.9
+  gem 'mime-types', '1.25.1',               :require => false if RUBY_VERSION.to_f < 1.9
+  gem 'hocon', '0.1.0',                     :require => false if RUBY_VERSION.to_f < 1.9
 end
 
 group :system_tests do

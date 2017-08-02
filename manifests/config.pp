@@ -2,7 +2,7 @@ class sfptpd::config(
   $sync_mode                    = $sfptpd::sync_mode,
   $interface                    = $sfptpd::interface,
   $message_log                  = $sfptpd::message_log,
-  $stats_log                    = $sfptpd::stats_log,
+  $stats_log_file               = $sfptpd::stats_log_file,
   $daemon                       = $sfptpd::daemon,
   $lock                         = $sfptpd::lock,
   $clock_control                = $sfptpd::clock_control,
