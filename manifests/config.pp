@@ -54,8 +54,10 @@ class sfptpd::config(
 
   if ($config_file_ensure == 'absent') {
     $config_file_notifies = undef
+    $log_dir_ensure = 'absent'
   } else {
     $config_file_notifies = Class[sfptpd::service]
+    $log_dir_ensure = 'directory'
   }
 
   file { $config_file:
@@ -95,9 +97,6 @@ class sfptpd::config(
     }
   }
 
-  if ($config_file_ensure != 'absent') {
-    $log_dir_ensure = 'directory'
-  }
   file { '/var/log/sfptpd':
     ensure => $log_dir_ensure,
   }

@@ -21,3 +21,10 @@
     - 'bundle install --path vendor/bundle --without system_tests'
     - 'bundle exec rake lint validate spec SPEC_OPTS="--format documentation"'
 
+'ruby2.1.9':
+  script:
+    - 'export RBENV_VERSION=2.1.9'
+    - 'export PUPPET_GEM_VERSION=4.10'
+    - 'ruby -v'
+    - 'bundle install --path vendor/bundle --without system_tests'
+    - 'bundle exec rake test'
