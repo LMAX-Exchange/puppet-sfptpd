@@ -1,0 +1,22 @@
+[<%= @name %>]
+interface <%= @interface %>
+<% if @priority -%>
+priority <%= @priority %>
+<% end -%>
+<% if @sync_threshold -%>
+sync_threshold <%= @sync_threshold %>
+<% end -%>
+master_clock_class <%= @master_clock_class %>
+master_time_source <%= @master_time_source %>
+master_accuracy <%= @master_accuracy %>
+<% if @pps_delay -%>
+pps_delay <%= @pps_delay %>
+<% end -%>
+pid_filter_p <%= @pid_filter_p %>
+pid_filter_i <%= @pid_filter_i %>
+outlier_filter_type <%= @outlier_filter_type %>
+<% if @outlier_filter_size -%>
+outlier_filter_size <%= @outlier_filter_size %>
+<% end -%>
+outlier_filter_adaption <%= @outlier_filter_adaption %>
+fir_filter_size <%= @fir_filter_size %>

@@ -1,0 +1,83 @@
+[<%= @name %>]
+interface <%= @interface %>
+ptp_mode <%= @ptp_mode %>
+<% if @priority -%>
+priority <%= @priority %>
+<% end -%>
+<% if @sync_threshold -%>
+sync_threshold <%= @sync_threshold %>
+<% end -%>
+<% if @ptp_pkt_dump -%>
+ptp_pkt_dump
+<% end -%>
+<% if @ptp_pps_log -%>
+ptp_pps_log
+<% end -%>
+<% if @ptp_tx_latency -%>
+ptp_tx_latency <% @ptp_tx_latency -%>
+<% end -%>
+<% if @ptp_rx_latency -%>
+ptp_rx_latency <% @ptp_rx_latency -%>
+<% end -%>
+ptp_delay_mechanism <%= @ptp_delay_mechanism %>
+ptp_network_mode <%= @ptp_network_mode %>
+ptp_ttl <%= @ptp_ttl %>
+<% if @ptp_utc_valid_handling -%>
+ptp_utc_valid_handling <%= @ptp_utc_valid_handling %>
+<% end -%>
+ptp_domain <%= @ptp_domain %>;
+<% if @ptp_timing_acl_allow %>
+ptp_timing_acl_allow <%= @ptp_timing_acl_allow %>
+<% end -%>
+<% if @ptp_timing_acl_deny %>
+ptp_timing_acl_deny <%= @ptp_timing_acl_deny %>
+<% end -%>
+<% if @ptp_timing_acl_order %>
+ptp_timing_acl_order <%= @ptp_timing_acl_order %>
+<% end -%>
+<% if @ptp_mgmt_acl_allow %>
+ptp_mgmt_acl_allow <%= @ptp_mgmt_acl_allow %>
+<% end -%>
+<% if @ptp_mgmt_acl_deny %>
+ptp_mgmt_acl_deny <%= @ptp_mgmt_acl_deny %>
+<% end -%>
+<% if @ptp_mgmt_acl_order %>
+ptp_mgmt_acl_order <%= @ptp_mgmt_acl_order %>
+<% end -%>
+ptp_announce_interval <%= @ptp_announce_interval %>
+ptp_announce_timeout <%= @ptp_announce_timeout %>
+<% if @ptp_delayreq_interval -%>
+ptp_delayreq_interval <%= @ptp_delayreq_interval %>
+<% end -%>
+ptp_delayresp_timeout <%= @ptp_delayresp_timeout %>
+<% if @ptp_bmc_priority1 -%>
+ptp_bmc_priority1 <%= @ptp_bmc_priority1 %>
+<% end -%>
+<% if @ptp_bmc_priority2 -%>
+ptp_bmc_priority2 <%= @ptp_bmc_priority2 %>
+<% end -%>
+ptp_trace <%= @ptp_trace %>
+pid_filter_p <%= @pid_filter_p %>
+pid_filter_i <%= @pid_filter_i %>
+<% if @remote_monitor -%>
+remote_monitor <%= @remote_monitor %>
+<% end -%>
+<% if @json_remote_monitor %>
+json_remote_monitor <%= @json_remote_monitor %>
+<% end -%>
+<% if @mon_monitor_address -%>
+mon_monitor_address <%= @mon_monitor_address %>
+<% end -%>
+<% if @mon_rx_sync_timing_data -%>
+mon_rx_sync_timing_data <%= @mon_rx_sync_timing_data %>
+<% end -%>
+<% if @mon_rx_sync_computed_data -%>
+mon_rx_sync_computed_data <%= @mon_rx_sync_computed_data %>
+<% end -%>
+outlier_filter_size <%= @outlier_filter_size %>
+outlier_filter_adaption <%= @outlier_filter_adaption %>
+mpd_filter_size <%= @mpd_filter_size %>
+<% if @mpd_filter_ageing -%>
+mpd_filter_ageing <%= @mpd_filter_ageing %>
+<% end -%>
+fir_filter_size <%= @fir_filter_size %>

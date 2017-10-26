@@ -1,0 +1,9 @@
+[<%= @name %>]
+<% if @priority -%>
+priority <%= @priority %>
+<% end -%>
+<% if @sync_threshold -%>
+sync_threshold <%= @sync_threshold %>
+<% end -%>
+ntp_poll_interval <%= @ntp_poll_interval %>
+ntp_key <%= @ntp_key %>

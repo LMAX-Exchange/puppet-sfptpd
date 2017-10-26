@@ -1,0 +1,23 @@
+{
+  "name": "lmaxexchange-sfptpd',
+  "version": "3.2.1",
+  "author": "lmax",
+  "summary": "manage sfptpd",
+  "license": "MIT",
+  "source": "",
+  "project_page": "https://github.com/LMAX-Exchange/puppet-sfptpd",
+  "issues_url": null,
+  "dependencies": [
+    {"name":"puppetlabs-stdlib", "version_requirement": "4.13.1"},
+    {"name":"puppetlabs-concat", "version_requirement": "2.2.0"},
+    {"name":"voxpupuli-logrotate", "version_requirement": "2.0.0"}
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "6"
+      ]
+    }
+  ]
+}

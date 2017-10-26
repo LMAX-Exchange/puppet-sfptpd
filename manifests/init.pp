@@ -1,48 +1,29 @@
 class sfptpd(
-  $sync_mode                    = $sfptpd::params::sync_mode,
-  $interface                    = $sfptpd::params::interface,
+  $sync_module                  = {},
+  $selection_policy             = $sfptpd::params::selection_policy,
+  $selection_holdoff_interval   = $sfptpd::params::selection_holdoff_interval,
+  $selection_policy_rules       = $sfptpd::params::selection_policy_rules,
   $message_log                  = $sfptpd::params::message_log,
-  $stats_log_enable             = $sfptpd::params::stats_log_enable,
-  $stats_log_file               = $sfptpd::params::stats_log_file,
+  $stats_log                    = $sfptpd::params::stats_log,
+  $json_remote_monitor          = $sfptpd::params::json_remote_monitor,
+  $json_stats                   = $sfptpd::params::json_stats,
   $daemon                       = $sfptpd::params::daemon,
   $lock                         = $sfptpd::params::lock,
+  $sync_interval                = $sfptpd::params::sync_interval,
+  $local_sync_threshold         = $sfptpd::params::local_sync_threshold,
   $clock_control                = $sfptpd::params::clock_control,
+  $clock_list                   = $sfptpd::params::clock_list,
   $persistent_clock_correction  = $sfptpd::params::persistent_clock_correction,
   $timestamping_interfaces      = $sfptpd::params::timestamping_interfaces,
   $timestamping_disable_on_exit = $sfptpd::params::timestamping_disable_on_exit,
+  $non_solarflare_nics          = $sfptpd::params::non_solarflare_nics,
+  $pid_filter_p                 = $sfptpd::params::pid_filter_p,
+  $pid_filter_i                 = $sfptpd::params::pid_filter_i,
   $trace_level                  = $sfptpd::params::trace_level,
-  $ptp_mode                     = $sfptpd::params::ptp_mode,
-  $ptp_stats                    = $sfptpd::params::ptp_stats,
-  $ptp_pkt_dump                 = $sfptpd::params::ptp_pkt_dump,
-  $ptp_pps_log                  = $sfptpd::params::ptp_pps_log,
-  $pps_delay                    = $sfptpd::params::pps_delay,
-  $ptp_delay_discard_threshold  = $sfptpd::params::ptp_delay_discard_threshold,
-  $ptp_tx_latency               = $sfptpd::params::ptp_tx_latency,
-  $ptp_rx_latency               = $sfptpd::params::ptp_rx_latency,
-  $ptp_network_mode             = $sfptpd::params::ptp_network_mode,
-  $ptp_ttl                      = $sfptpd::params::ptp_ttl,
-  $ptp_utc_valid_handling       = $sfptpd::params::ptp_utc_valid_handling,
-  $ptp_domain                   = $sfptpd::params::ptp_domain,
   $ptp_mgmt_msgs                = $sfptpd::params::ptp_mgmt_msgs,
-  $ptp_timing_acl_permit        = $sfptpd::params::ptp_timing_acl_permit,
-  $ptp_timing_acl_deny          = $sfptpd::params::ptp_timing_acl_deny,
-  $ptp_timing_acl_order         = $sfptpd::params::ptp_timing_acl_order,
-  $ptp_mgmt_acl_permit          = $sfptpd::params::ptp_mgmt_acl_permit,
-  $ptp_mgmt_acl_deny            = $sfptpd::params::ptp_mgmt_acl_deny,
-  $ptp_mgmt_acl_order           = $sfptpd::params::ptp_mgmt_acl_order,
-  $ptp_announce_timeout         = $sfptpd::params::ptp_announce_timeout,
-  $ptp_sync_pkt_timeout         = $sfptpd::params::ptp_sync_pkt_timeout,
-  $ptp_sync_pkt_interval        = $sfptpd::params::ptp_sync_pkt_interval,
-  $ptp_delayreq_interval        = $sfptpd::params::ptp_delayreq_interval,
-  $ptp_delayresp_timeout        = $sfptpd::params::ptp_delayresp_timeout,
   $ptp_max_foreign_records      = $sfptpd::params::ptp_max_foreign_records,
   $ptp_uuid_filtering           = $sfptpd::params::ptp_uuid_filtering,
   $ptp_domain_filtering         = $sfptpd::params::ptp_domain_filtering,
-  $ptp_trace                    = $sfptpd::params::ptp_trace,
-  $freerun_mode                 = $sfptpd::params::freerun_mode,
-  $ntp_mode                     = $sfptpd::params::ntp_mode,
-  $ntp_poll_interval            = $sfptpd::params::ntp_poll_interval,
-  $ntp_key                      = $sfptpd::params::ntp_key,
   $package_name                 = $sfptpd::params::package_name,
   $package_ensure               = $sfptpd::params::package_ensure,
   $config_file                  = $sfptpd::params::config_file,
@@ -57,73 +38,43 @@ class sfptpd(
   $service_enable               = $sfptpd::params::service_enable,
   $service_hasrestart           = $sfptpd::params::service_hasrestart,
   $service_hasstatus            = $sfptpd::params::service_hasstatus,
-  $manage_init_script           = $sfptpd::params::manage_init_script,
-  $manage_logrotate             = true,
+  $manage_logrotate             = $sfptpd::params::manage_logrotate,
 ) inherits sfptpd::params {
-  validate_string($sync_mode)
-  if ! ($sync_mode in [ 'ptp', 'freerun' ]) {
-    fail("Parameter 'sync_mode' must be 'ptp' or 'freerun'")
-  }
-  validate_string($interface)
+  validate_hash($sync_module)
+  validate_re($selection_policy, [ '^automatic$', '^manual$', '^initial-manual-instance$' ],
+    "Parameter 'selection_policy' must be one of 'automatic', 'manual' or 'initial-manual-instance'")
+  validate_integer($selection_holdoff_interval)
+  validate_string($selection_policy_rules)
   validate_string($message_log)
-  validate_string($stats_log_file)
+  validate_string($stats_log)
+  validate_string($json_remote_monitor)
+  validate_string($json_stats)
   validate_bool($daemon)
-  validate_string($lock)
-  if ! ($lock in [ 'on', 'off' ]) {
-    fail("Parameter 'lock' must be 'on' or 'off'")
+  validate_re($lock, [ '^on$', '^off$' ], "Parameter 'lock' must be 'on' or 'off'")
+  if ($sync_interval) {
+    validate_integer($sync_interval)
   }
-  validate_string($clock_control)
-  if ! ($clock_control in [ 'slew-and-step', 'step-at-startup', 'no-step', 'no-adjust', 'step-forward' ]) {
-    fail("Parameter 'clock_control' must be one of: 'slew-and-step', 'step-at-startup', 'no-step', 'no-adjust', 'step-forward'")
-  }
-  validate_string($persistent_clock_correction)
-  if ! ($persistent_clock_correction in [ 'on', 'off' ]) {
-    fail("Parameter 'persistent_clock_correction' must be 'on' or 'off'")
-  }
-  validate_string($freerun_mode)
-  if ! ($freerun_mode in [ 'nic', 'ntp' ]) {
-    fail("Parameter 'freerun_mode' must be 'nic' or 'ntp'")
-  }
-  validate_string($ntp_mode)
-  if ! ($ntp_mode in ['off', 'read-only', 'control' ]) {
-    fail("Parameter 'ntp_mode' must be one of: 'off', 'read-only', 'control'")
-  }
-  validate_integer($ntp_poll_interval, undef, 1)
-  validate_string($ptp_mode)
-  validate_bool($ptp_pkt_dump)
-  validate_bool($ptp_pps_log)
-  validate_integer($pps_delay, undef, 0)
-  validate_integer($ptp_delay_discard_threshold)
-  validate_integer($ptp_tx_latency)
-  validate_integer($ptp_rx_latency)
-  validate_string($ptp_network_mode)
-  if ! ($ptp_network_mode in [ 'multicast', 'hybrid' ]) {
-    fail("Parameter 'ptp_network_mode' must be 'multicast' or 'hybrid'")
-  }
-  validate_string($ptp_utc_valid_handling)
-  if ! ($ptp_utc_valid_handling in [ 'default', 'ignore', 'prefer', 'require' ]) {
-    fail("Parameter 'ptp_utc_valid_handling' must be one of: 'default', 'ignore', 'prefer', 'require'")
-  }
-  validate_integer($ptp_domain)
-  validate_string($ptp_mgmt_msgs)
-  if ! ($ptp_mgmt_msgs in [ 'disabled', 'read-only' ]) {
-    fail("Parameter 'ptp_mgmt_msgs' must be 'disabled' or 'read-only'")
-  }
-  validate_integer($ptp_announce_timeout)
-  validate_integer($ptp_sync_pkt_timeout)
-  validate_integer($ptp_sync_pkt_interval)
-  validate_integer($ptp_delayreq_interval)
-  validate_integer($ptp_delayresp_timeout)
+  validate_string($local_sync_threshold)
+  validate_re($clock_control, [ '^slew-and-step$', '^step-at-startup$', '^no-step$', '^no-adjust$', '^step-forward$' ],
+    "Parameter 'clock_control' must be one of 'slew-and-step', 'step-at-startup', 'no-step', 'no-adjust' or 'step-forward'")
+  validate_string($clock_list)
+  validate_re($persistent_clock_correction, [ '^on$', '^off$' ],
+    "Parameter 'persistent_clock_correction' must be 'on' or 'off'")
+  validate_string($timestamping_interfaces)
+  validate_re($timestamping_disable_on_exit, [ '^on$', '^off$' ],
+    "Parameter 'timestamping_disable_on_exit' must be 'on' or 'off'")
+  validate_re($non_solarflare_nics, [ '^on$', '^off$' ],
+    "Parameter 'non_solarflare_nics' must be 'on' or 'off'")
+  validate_integer($trace_level)
+
+  #Generic PTP option validation
+  validate_re($ptp_mgmt_msgs, [ '^disabled$', '^read-only$' ],
+    "Parameter 'ptp_mgmt_msgs' must be 'disabled' or 'read-only'")
   validate_integer($ptp_max_foreign_records)
-  validate_string($ptp_uuid_filtering)
-  if ! ($ptp_uuid_filtering in [ 'on', 'off' ]) {
-    fail("Parameter 'ptp_uuid_filtering' must be 'on' or 'off'")
-  }
-  validate_string($ptp_domain_filtering)
-  if ! ($ptp_domain_filtering in ['on', 'off']) {
-    fail("Parameter 'ptp_domain_filtering' must be 'on' or 'off'")
-  }
-  validate_integer($ptp_trace)
+  validate_re($ptp_uuid_filtering, [ '^on$', '^off$' ],
+    "Parameter 'ptp_uuid_filtering' must be 'on' or 'off'")
+  validate_re($ptp_domain_filtering, [ '^on$', '^off$' ],
+    "Parameter 'ptp_domain_filtering' must be 'on' or 'off'")
 
   validate_string($package_name)
   validate_string($package_ensure)
@@ -141,7 +92,7 @@ class sfptpd(
   validate_bool($service_enable)
   validate_bool($service_hasrestart)
   validate_bool($service_hasstatus)
-  validate_bool($manage_init_script)
+  validate_bool($manage_logrotate)
 
   contain ::sfptpd::install
   contain ::sfptpd::config

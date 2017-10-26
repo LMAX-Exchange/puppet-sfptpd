@@ -6,7 +6,6 @@ class sfptpd::service(
   $service_hasrestart         = $sfptpd::service_hasrestart,
   $service_hasstatus          = $sfptpd::service_hasstatus,
 ) inherits sfptpd {
-  assert_private()
   if ($manage_service) {
     service { $service_name:
       ensure     => $service_ensure,
