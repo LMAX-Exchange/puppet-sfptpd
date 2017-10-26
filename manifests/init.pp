@@ -41,8 +41,8 @@ class sfptpd(
   $manage_logrotate             = $sfptpd::params::manage_logrotate,
 ) inherits sfptpd::params {
   validate_hash($sync_module)
-  validate_re($selection_policy, [ '^automatic$', '^manual$', '^initial-manual-instance$' ],
-    "Parameter 'selection_policy' must be one of 'automatic', 'manual' or 'initial-manual-instance'")
+  validate_re($selection_policy, [ '^automatic$', '^manual', '^initial-manual-instance' ],
+    "Parameter 'selection_policy' must be one of 'automatic', or start with 'manual' or 'initial-manual-instance'")
   validate_integer($selection_holdoff_interval)
   validate_string($selection_policy_rules)
   validate_string($message_log)
