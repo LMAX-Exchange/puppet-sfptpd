@@ -61,7 +61,7 @@ An example of sfptpd using PPS and NTP:
 
 ~~~ puppet
 class { 'sfptpd': 
-  sync_module => { 'pps' => [ 'pps1' ], 'ntp' => [ 'ntp1' ], },
+  sync_module      => { 'pps' => [ 'pps1' ], 'ntp' => [ 'ntp1' ], },
   selection_policy => 'manual pps1',
 }
 sfptpd::sync_module::pps { 'pps1':
