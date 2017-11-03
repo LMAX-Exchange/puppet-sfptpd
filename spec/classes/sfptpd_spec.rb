@@ -79,6 +79,7 @@ describe 'sfptpd' do
       context 'with stats_log set' do
         let(:params) {{ :stats_log => '/var/log/sfptpd/sfptpd.stats' }}
         it { should contain_concat__fragment('base').with_content(/^stats_log \/var\/log\/sfptpd\/sfptpd\.stats/) }
+        it { should contain_logrotate__rule('sfptpd').with_path(/\/var\/log\/sfptpd\/sfptpd\.stats/) }
       end
 
       context 'with lots of sync_modules' do

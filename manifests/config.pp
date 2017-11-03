@@ -66,8 +66,10 @@ class sfptpd::config(
   }
 
   if ($manage_logrotate) {
+    $possible_files = [ $config_file, $json_stats, $stats_log ]
+    $files = join(delete_undef_values($possible_files), ' ')
     logrotate::rule { 'sfptpd':
-      path         => '/var/log/sfptpd/*.log',
+      path         => $files,
       compress     => true,
       copytruncate => true,
       missingok    => true,
