@@ -19,7 +19,8 @@ group :development, :unit_tests do
   gem 'rspec-puppet-utils',                 :require => false
   gem 'simplecov',                          :require => false
   gem 'json',                               :require => false
-  gem 'metadata-json-lint',                 :require => false
+  gem 'metadata-json-lint', '1.2.2',        :require => false if RUBY_VERSION.to_f == 2.1
+  gem 'metadata-json-lint', '1.1.0',        :require => false if RUBY_VERSION.to_f <= 1.9
   gem 'json_pure', '<= 1.8.3',              :require => false if RUBY_VERSION.to_f <= 1.9
   gem 'i18n', '0.6.0',                      :require => false if RUBY_VERSION.to_f < 1.9
   gem 'nokogiri', '1.5.11',                 :require => false if RUBY_VERSION.to_f < 1.9
