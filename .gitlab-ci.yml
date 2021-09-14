@@ -1,30 +1,53 @@
-# Documentation http://doc.gitlab.com/ci/yaml/README.html
+---
+stages:
+  - syntax
+  - unit
 
-"ruby 1.8.7-p352":
-  script:
-    - 'export RBENV_VERSION=1.8.7-p352'
-    - 'ruby -v'
-    - 'bundle install --path vendor/bundle --without system_tests'
-    - 'bundle exec rake lint validate spec SPEC_OPTS="--format documentation"'
+default:
+  cache:
+    paths:
+      - vendor/bundle
 
-"ruby1.9.3-p551 ":
-  script:
-    - 'export RBENV_VERSION=1.9.3-p551'
-    - 'ruby -v'
-    - 'bundle install --path vendor/bundle --without system_tests'
-    - 'bundle exec rake lint validate spec SPEC_OPTS="--format documentation"'
+  before_script: &before_script
+    - bundle -v
+    - rm Gemfile.lock || true
+    - "# Update system gems if requested. This is useful to temporarily workaround troubles in the test runner"
+    - "# Set `rubygems_version` in the .sync.yml to set a value"
+    - "# Ignore exit code of SIGPIPE'd yes to not fail with shell's pipefail set"
+    - '[ -z "$RUBYGEMS_VERSION" ] || (yes || true) | gem update --system $RUBYGEMS_VERSION'
+    - gem --version
+    - bundle -v
+    - bundle install --without system_tests --path vendor/bundle --jobs $(nproc)
 
-"ruby 2.1.6":
+validate lint check rubocop-Ruby 2.5.7-Puppet ~> 6:
+  stage: syntax
+  image: ruby:2.5.7
   script:
-    - 'export RBENV_VERSION=2.1.6'
-    - 'ruby -v'
-    - 'bundle install --path vendor/bundle --without system_tests'
-    - 'bundle exec rake lint validate spec SPEC_OPTS="--format documentation"'
+    - bundle exec rake validate lint check rubocop
+  variables:
+    PUPPET_GEM_VERSION: '~> 6'
 
-'ruby2.1.9':
+parallel_spec-Ruby 2.5.7-Puppet ~> 6:
+  stage: unit
+  image: ruby:2.5.7
   script:
-    - 'export RBENV_VERSION=2.1.9'
-    - 'export PUPPET_GEM_VERSION=4.10'
-    - 'ruby -v'
-    - 'bundle install --path vendor/bundle --without system_tests'
-    - 'bundle exec rake test'
+    - bundle exec rake parallel_spec
+  variables:
+    PUPPET_GEM_VERSION: '~> 6'
+
+validate lint check rubocop-Ruby 2.7.2-Puppet ~> 7:
+  stage: syntax
+  image: ruby:2.7.2
+  script:
+    - bundle exec rake validate lint check rubocop
+  variables:
+    PUPPET_GEM_VERSION: '~> 7'
+
+parallel_spec-Ruby 2.7.2-Puppet ~> 7:
+  stage: unit
+  image: ruby:2.7.2
+  script:
+    - bundle exec rake parallel_spec
+  variables:
+    PUPPET_GEM_VERSION: '~> 7'
+
