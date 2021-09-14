@@ -1,4 +1,4 @@
-class sfptpd::config(
+class sfptpd::config (
   Hash $sync_module                              = {},
   String $selection_policy                       = $sfptpd::selection_policy,
   Integer $selection_holdoff_interval            = $sfptpd::selection_holdoff_interval,
@@ -61,14 +61,14 @@ class sfptpd::config(
     notify => $notifies,
   }
 
-  concat::fragment { 'base':
+  concat::fragment { 'sfptpd_base':
     target  => $config_file,
     order   => '0',
     content => template($config_file_content_template),
   }
 
   if ($manage_logrotate) {
-    $possible_files = [ $message_log, $json_stats, $stats_log ]
+    $possible_files = [$message_log, $json_stats, $stats_log]
     $files = join(delete_undef_values($possible_files), ' ')
     logrotate::rule { 'sfptpd':
       path         => $files,
