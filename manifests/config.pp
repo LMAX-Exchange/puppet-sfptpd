@@ -1,5 +1,5 @@
 class sfptpd::config (
-  Hash $sync_module                              = {},
+  Hash $sync_module                              = $sfptpd::sync_module,
   String $selection_policy                       = $sfptpd::selection_policy,
   Integer $selection_holdoff_interval            = $sfptpd::selection_holdoff_interval,
   Optional[String] $selection_policy_rules       = $sfptpd::selection_policy_rules,

@@ -1,18 +1,19 @@
 require 'spec_helper'
 
 describe 'sfptpd::sync_module::pps' do
-  context 'on CentOS OS' do
-    let(:pre_condition) { [ "class { 'sfptpd': config_file => '/etc/sfptpd.conf' }" ] }
-    let(:facts) {{
-      :osfamily                => 'RedHat',
-      :operatingsystemrelease  => '6.6',
-      :operatingsystem         => 'CentOS'
-    }}
-    let(:title) { 'pps1' }
-    let(:params) {{ :interface => 'eth0' }}
-    it { should compile }
-    it { should contain_concat__fragment('pps_pps1').with_content(/^interface eth0/) }
-    it { should contain_concat__fragment('pps_pps1').with_content(/^master_time_source gps/) }
-    it { should contain_concat__fragment('pps_pps1').with_content(/^outlier_filter_type std-dev/) }
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts
+      end
+      let(:pre_condition) { [ "class { 'sfptpd': config_file => '/etc/sfptpd.conf' }" ] }
+      let(:title) { 'pps1' }
+      let(:params) { { interface: 'eth0' } }
+
+      it { is_expected.to compile }
+      it { is_expected.to contain_concat__fragment('pps_pps1').with_content(%r{^interface eth0}) }
+      it { is_expected.to contain_concat__fragment('pps_pps1').with_content(%r{^master_time_source gps}) }
+      it { is_expected.to contain_concat__fragment('pps_pps1').with_content(%r{^outlier_filter_type std-dev}) }
+    end
   end
 end
