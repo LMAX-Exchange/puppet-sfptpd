@@ -1,4 +1,4 @@
-class sfptpd(
+class sfptpd (
   Hash $sync_module                              = {},
   String $selection_policy                       = $sfptpd::params::selection_policy,
   Integer $selection_holdoff_interval            = $sfptpd::params::selection_holdoff_interval,
@@ -40,18 +40,18 @@ class sfptpd(
   Boolean $service_hasstatus                     = $sfptpd::params::service_hasstatus,
   Boolean $manage_logrotate                      = $sfptpd::params::manage_logrotate,
 ) inherits sfptpd::params {
-  contain ::sfptpd::install
-  contain ::sfptpd::config
-  contain ::sfptpd::service
+  contain sfptpd::install
+  contain sfptpd::config
+  contain sfptpd::service
 
   if ($service_ensure == 'running') {
-    Class[::sfptpd::config] -> Class[::sfptpd::service]
+    Class[sfptpd::config] -> Class[sfptpd::service]
   } else {
-    Class[::sfptpd::service] -> Class[::sfptpd::config]
+    Class[sfptpd::service] -> Class[sfptpd::config]
   }
   if ($package_ensure == 'absent') {
-    Class[::sfptpd::config] -> Class[::sfptpd::install]
+    Class[sfptpd::config] -> Class[sfptpd::install]
   } else {
-    Class[::sfptpd::install] -> Class[::sfptpd::config]
+    Class[sfptpd::install] -> Class[sfptpd::config]
   }
 }
