@@ -7,7 +7,11 @@ class sfptpd::params {
   $stats_log                    = undef
   $json_remote_monitor          = undef
   $json_stats                   = undef
-  $daemon                       = true
+  # Daemon mode conflicts with systemd, so don't enable the daemon option on EL8.
+  $daemon = $facts['os']['release']['major'] ? {
+    '8'     => false,
+    default => true
+  }
   $lock                         = 'on'
   $sync_interval                = undef
   $local_sync_threshold         = undef
