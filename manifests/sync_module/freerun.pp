@@ -1,8 +1,8 @@
+# sfptpd::sync_module::freerun
 define sfptpd::sync_module::freerun(
-  $interface,
-  $priority  = undef,
+  String $interface,
+  Optional[Integer] $priority  = undef,
 ) {
-  validate_string($interface)
 
   concat::fragment { "freerun_${name}":
     target  => $::sfptpd::config_file,

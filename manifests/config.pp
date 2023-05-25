@@ -13,6 +13,7 @@ class sfptpd::config (
   Optional[Integer] $local_sync_threshold        = $sfptpd::local_sync_threshold,
   String $clock_control                          = $sfptpd::clock_control,
   Optional[String] $clock_list                   = $sfptpd::clock_list,
+  Optional[String] $epoch_guard                  = $sfptpd::epoch_guard,
   Optional[String] $persistent_clock_correction  = $sfptpd::persistent_clock_correction,
   Optional[String] $timestamping_interfaces      = $sfptpd::timestamping_interfaces,
   String $timestamping_disable_on_exit           = $sfptpd::timestamping_disable_on_exit,

@@ -1,4 +1,5 @@
 # Puppet Managed configuration for sfptpd
+[general]
 <% @sync_module.each do |k,v| -%>
 sync_module <%= k %> <% v.each do |n| -%><%= n %> <% end %>
 <% end -%>
@@ -34,6 +35,9 @@ local_sync_threshold <%= @local_sync_threshold %>
 clock_control <%= @clock_control %>
 <% if @clock_list -%>
 clock_list <%= @clock_list %>
+<% end -%>
+<% if @epoch_guard -%>
+epoch_guard <%= @epoch_guard %>
 <% end -%>
 persistent_clock_correction <%= @persistent_clock_correction %>
 <% if @timestamping_interfaces -%>
