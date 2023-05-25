@@ -1,11 +1,10 @@
+# sfptpd::sync_module::ntp
 define sfptpd::sync_module::ntp (
-  $ntp_key,
-  $priority          = undef,
-  $sync_threshold    = undef,
-  $ntp_poll_interval = 1,
+  Pattern[/^\d+\s+\S+/] $ntp_key,
+  Optional[Integer] $priority       = undef,
+  Optional[Integer] $sync_threshold = undef,
+  Integer $ntp_poll_interval        = 1,
 ) {
-  validate_re($ntp_key, '^\d+\s+\S+')
-  validate_integer($ntp_poll_interval)
 
   concat::fragment { "ntp_${name}":
     target  => $sfptpd::config_file,
