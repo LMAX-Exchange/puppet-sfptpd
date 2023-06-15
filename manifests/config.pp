@@ -35,7 +35,6 @@ class sfptpd::config (
   String $config_file_mode                         = $sfptpd::config_file_mode,
   String $config_file_content_template             = $sfptpd::config_file_content_template,
   Boolean $manage_service                          = $sfptpd::manage_service,
-  Optional[String] $time_of_day                    = $sfptpd::time_of_day,
   Enum['disabled', 'std-dev'] $outlier_filter_type = $sfptpd::outlier_filter_type,
   Integer[5, 60] $outlier_filter_size              = $sfptpd::outlier_filter_size,
   Float[0.0, 1.0] $outlier_filter_adaption         = $sfptpd::outlier_filter_adaption,

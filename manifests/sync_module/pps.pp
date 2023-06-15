@@ -13,6 +13,7 @@ define sfptpd::sync_module::pps(
   Optional[Integer] $outlier_filter_size                                = undef,
   Float $outlier_filter_adaption                                        = 1.0,
   Integer $fir_filter_size                                              = 4,
+  Optional[String] $time_of_day                                         = undef,
 ) {
 
   concat::fragment { "pps_${name}":
