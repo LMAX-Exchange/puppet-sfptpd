@@ -7,6 +7,6 @@ define sfptpd::sync_module::freerun(
   concat::fragment { "freerun_${name}":
     target  => $::sfptpd::config_file,
     content => template("${module_name}/freerun.erb"),
-    order   => 60,
+    order   => 70,
   }
 }

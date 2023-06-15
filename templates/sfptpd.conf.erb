@@ -36,6 +36,9 @@ clock_control <%= @clock_control %>
 <% if @clock_list -%>
 clock_list <%= @clock_list %>
 <% end -%>
+<% if @clock_readonly -%>
+clock_readonly <%= @clock_readonly %>
+<% end -%>
 <% if @epoch_guard -%>
 epoch_guard <%= @epoch_guard %>
 <% end -%>
@@ -48,6 +51,14 @@ non_solarflare_nics <%= @non_solarflare_nics %>
 pid_filter_p <%= @pid_filter_p %>
 pid_filter_i <%= @pid_filter_i %>
 trace_level <%= @trace_level %>
+outlier_filter_type <%= @outlier_filter_type %>
+<% if @time_of_day -%>
+time_of_day <%= @time_of_day %>
+<% end -%>
+outlier_filter_type <%= @outlier_filter_type %>
+outlier_filter_size <%= @outlier_filter_size %>
+outlier_filter_adaption <%= @outlier_filter_adaption %>
+fir_filter_size <%= @fir_filter_size %>
 
 <% if @there_is_a_ptp_instance -%>
 [ptp]

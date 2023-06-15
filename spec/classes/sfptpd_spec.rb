@@ -104,12 +104,14 @@ describe 'sfptpd' do
                 ntp:  [ 'ntp1' ],
                 freerun:  [ 'fr1' ],
                 pps: [ 'pps1' ],
+                crny: [ 'crny1' ],
               }
             }
           end
 
           it { is_expected.to contain_concat__fragment('sfptpd_base').with_content(%r{^sync_module ptp ptp1 ptp2}) }
           it { is_expected.to contain_concat__fragment('sfptpd_base').with_content(%r{^sync_module ntp ntp1}) }
+          it { is_expected.to contain_concat__fragment('sfptpd_base').with_content(%r{^sync_module crny crny1}) }
           it { is_expected.to contain_concat__fragment('sfptpd_base').with_content(%r{^sync_module freerun fr1}) }
           it { is_expected.to contain_concat__fragment('sfptpd_base').with_content(%r{^sync_module pps pps1}) }
           if facts[:os]['release']['major'].to_i >= 8

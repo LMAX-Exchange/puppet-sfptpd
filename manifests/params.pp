@@ -19,6 +19,7 @@ class sfptpd::params {
   $local_sync_threshold         = undef
   $clock_control                = 'slew-and-step'
   $clock_list                   = undef
+  $clock_readonly               = undef
   $epoch_guard                  = 'prevent-sync'
   $persistent_clock_correction  = 'on'
   $timestamping_interfaces      = undef
@@ -46,4 +47,9 @@ class sfptpd::params {
   $service_hasrestart           = true
   $service_hasstatus            = true
   $manage_logrotate             = true
+  $time_of_day                  = undef
+  $outlier_filter_type          = 'std-dev'
+  $outlier_filter_size          = 30
+  $outlier_filter_adaption      = 1.0
+  $fir_filter_size              = 4
 }
