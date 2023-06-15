@@ -10,9 +10,9 @@ define sfptpd::sync_module::pps(
   Float $pid_filter_p                                                   = 0.05,
   Float $pid_filter_i                                                   = 0.001,
   Enum['disabled', 'std-dev'] $outlier_filter_type                      = 'std-dev',
-  Optional[Integer] $outlier_filter_size                                = undef,
-  Float $outlier_filter_adaption                                        = 1.0,
-  Integer $fir_filter_size                                              = 4,
+  Integer[5, 30] $outlier_filter_size                                   = 30,
+  Float[0.0, 1.0] $outlier_filter_adaption                              = 1.0,
+  Integer[1, 128] $fir_filter_size                                      = 4,
 ) {
 
   concat::fragment { "pps_${name}":
