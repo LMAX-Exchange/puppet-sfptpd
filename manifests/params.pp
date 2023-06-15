@@ -47,9 +47,5 @@ class sfptpd::params {
   $service_hasrestart           = true
   $service_hasstatus            = true
   $manage_logrotate             = true
-  $outlier_filter_type          = 'std-dev'
-  $outlier_filter_size          = 30
-  $outlier_filter_adaption      = 1.0
-  $fir_filter_size              = 4
   $time_of_day                  = undef
 }
