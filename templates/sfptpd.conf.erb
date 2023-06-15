@@ -73,3 +73,9 @@ ptp_domain_filtering <%= @ptp_domain_filtering %>
 <% end -%>
 <% end -%>
 
+<% if @there_is_a_pps_instance -%>
+[pps]
+<% if @time_of_day -%>
+time_of_day <%= @time_of_day %>
+<% end -%>
+<% end -%>

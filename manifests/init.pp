@@ -13,6 +13,7 @@ class sfptpd (
   Optional[Integer] $local_sync_threshold        = $sfptpd::params::local_sync_threshold,
   String $clock_control                          = $sfptpd::params::clock_control,
   Optional[String] $clock_list                   = $sfptpd::params::clock_list,
+  Optional[String] $clock_readonly               = $sfptpd::params::clock_readonly,
   Optional[String] $persistent_clock_correction  = $sfptpd::params::persistent_clock_correction,
   Optional[String] $timestamping_interfaces      = $sfptpd::params::timestamping_interfaces,
   String $timestamping_disable_on_exit           = $sfptpd::params::timestamping_disable_on_exit,
@@ -39,6 +40,7 @@ class sfptpd (
   Boolean $service_hasrestart                    = $sfptpd::params::service_hasrestart,
   Boolean $service_hasstatus                     = $sfptpd::params::service_hasstatus,
   Boolean $manage_logrotate                      = $sfptpd::params::manage_logrotate,
+  Optional[String] $time_of_day                  = $sfptpd::params::time_of_day,
 ) inherits sfptpd::params {
   contain sfptpd::install
   contain sfptpd::config

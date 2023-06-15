@@ -51,4 +51,5 @@ class sfptpd::params {
   $outlier_filter_size          = 30
   $outlier_filter_adaption      = 1.0
   $fir_filter_size              = 4
+  $time_of_day                  = undef
 }

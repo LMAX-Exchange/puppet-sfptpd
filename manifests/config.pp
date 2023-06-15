@@ -39,6 +39,7 @@ class sfptpd::config (
   Integer[5, 60] $outlier_filter_size              = $sfptpd::outlier_filter_size,
   Float[0.0, 1.0] $outlier_filter_adaption         = $sfptpd::outlier_filter_adaption,
   Integer[1, 128] $fir_filter_size                 = $sfptpd::fir_filter_size,
+  Optional[String] $time_of_day                    = $sfptpd::time_of_day,
 ) inherits sfptpd {
   if ($config_file_ensure == 'absent') {
     $config_file_notifies = undef
@@ -57,6 +58,12 @@ class sfptpd::config (
     $there_is_a_ptp_instance = true
   } else {
     $there_is_a_ptp_instance = false
+  }
+
+  if ('pps' in $sync_module) {
+    $there_is_a_pps_instance = true
+  } else {
+    $there_is_a_pps_instance = false
   }
 
   concat { $config_file:
