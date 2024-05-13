@@ -30,8 +30,6 @@ class sfptpd::params {
   $trace_level                  = 0
   $ptp_mgmt_msgs                = 'disabled'
   $ptp_max_foreign_records      = 16
-  $ptp_uuid_filtering           = 'on'
-  $ptp_domain_filtering         = 'on'
   $package_name                 = 'sfptpd'
   $package_ensure               = 'installed'
   $config_file                  = '/etc/sfptpd.conf'

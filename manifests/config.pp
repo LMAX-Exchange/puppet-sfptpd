@@ -24,8 +24,6 @@ class sfptpd::config (
   Integer $trace_level                             = $sfptpd::trace_level,
   String $ptp_mgmt_msgs                            = $sfptpd::ptp_mgmt_msgs,
   Integer $ptp_max_foreign_records                 = $sfptpd::ptp_max_foreign_records,
-  String $ptp_uuid_filtering                       = $sfptpd::ptp_uuid_filtering,
-  String $ptp_domain_filtering                     = $sfptpd::ptp_domain_filtering,
   String $package_name                             = $sfptpd::package_name,
   String $package_ensure                           = $sfptpd::package_ensure,
   String $config_file                              = $sfptpd::config_file,
