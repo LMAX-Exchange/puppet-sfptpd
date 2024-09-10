@@ -1,4 +1,5 @@
-class sfptpd::service(
+#
+class sfptpd::service (
   Boolean $manage_service     = $sfptpd::manage_service,
   String $service_name        = $sfptpd::service_name,
   String $service_ensure      = $sfptpd::service_ensure,

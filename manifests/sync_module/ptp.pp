@@ -1,5 +1,5 @@
 # sfptpd::sync_module::ptp
-define sfptpd::sync_module::ptp(
+define sfptpd::sync_module::ptp (
   String $interface,
   Enum['slave', 'master'] $ptp_mode                                                            = 'slave',
   Optional[Integer] $priority                                                                  = undef,
@@ -39,7 +39,6 @@ define sfptpd::sync_module::ptp(
   Optional[Integer] $mpd_filter_ageing                                                         = undef,
   Integer $fir_filter_size                                                                     = 1,
 ) {
-
   concat::fragment { "ptp_${name}":
     target  => $::sfptpd::config_file,
     content => template("${module_name}/ptp.erb"),

@@ -1,3 +1,4 @@
+#
 class sfptpd::config (
   Hash $sync_module                                = $sfptpd::sync_module,
   String $selection_policy                         = $sfptpd::selection_policy,

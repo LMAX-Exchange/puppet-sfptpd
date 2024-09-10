@@ -1,5 +1,5 @@
 # sfptpd::sync_module::pps
-define sfptpd::sync_module::pps(
+define sfptpd::sync_module::pps (
   String $interface,
   Optional[Integer] $priority                                           = undef,
   Optional[Integer] $sync_threshold                                     = undef,
@@ -14,7 +14,6 @@ define sfptpd::sync_module::pps(
   Float[0.0, 1.0] $outlier_filter_adaption                              = 1.0,
   Integer[1, 128] $fir_filter_size                                      = 4,
 ) {
-
   concat::fragment { "pps_${name}":
     target  => $::sfptpd::config_file,
     content => template("${module_name}/pps.erb"),
